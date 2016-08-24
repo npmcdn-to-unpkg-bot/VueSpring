@@ -17,7 +17,6 @@
     <url-pattern>/</url-pattern>
   </servlet-mapping>
 
-
   <!--Spring字符集过滤器-->
   <filter>
     <filter-name>CharacterEncodingFilter</filter-name>
@@ -35,9 +34,6 @@
     <filter-name>CharacterEncodingFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-
-
-
 
   <!--Spring容器监听器-->
   <listener>
