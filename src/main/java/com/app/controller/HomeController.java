@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.Cookie;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,21 +25,24 @@ public class HomeController extends Base{
     @RequestMapping(value = "/user/{id}")
     @ResponseBody
     public List getUsers(@PathVariable(value = "id") String userId){
-
         List list = new ArrayList();
         list.add("hello");
         list.add(userId);
-
         return list;
     }
 
     @RequestMapping(value = "/hello")
     @ResponseBody
     public Response getHello(){
-
         List list = new ArrayList();
         list.add(30);
         list.add("hello boy!");
         return Response.SUCCESS(list);
+    }
+
+    @RequestMapping(value = "/hi")
+    public String getHi(){
+        getResponse().addCookie(new Cookie("sdfds","dsfdsf"));
+        return "redirect:http://www.baidu.com";
     }
 }
