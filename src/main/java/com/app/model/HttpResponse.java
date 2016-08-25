@@ -6,12 +6,12 @@ import com.app.constant.Constant;
  * Created by Jerry on 2016/8/25.
  * 响应类
  */
-public class Response {
+public class HttpResponse {
 
     private Integer code;
     private Object message;
 
-    public Response(Integer code){
+    public HttpResponse(Integer code){
         this.code = code;
     }
 
@@ -31,17 +31,17 @@ public class Response {
         this.message = message;
     }
 
-    public static Response SUCCESS = new Response(Constant.SUCCESS_CODE);
-    public static Response FAILD = new Response(Constant.FAILD_CODE);
+    public static HttpResponse SUCCESS = new HttpResponse(Constant.SUCCESS_CODE);
+    public static HttpResponse FAILD = new HttpResponse(Constant.FAILD_CODE);
 
-    public static Response SUCCESS(Object message){
-        Response resp = Response.SUCCESS;
+    public static HttpResponse SUCCESS(Object message){
+        HttpResponse resp = HttpResponse.SUCCESS;
         resp.setMessage(message);
         return resp;
     }
 
-    public static Response FAILD(Object message){
-        Response resp = Response.FAILD;
+    public static HttpResponse FAILD(Object message){
+        HttpResponse resp = HttpResponse.FAILD;
         resp.setMessage(message);
         return resp;
     }
