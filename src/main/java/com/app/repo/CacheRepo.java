@@ -7,6 +7,7 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by mosl on 16/8/26.
@@ -30,7 +31,8 @@ public class CacheRepo {
     }
 
     public void set(String key, Object value,long expire) {
-        operations.set(key, value,expire);
+        operations.set(key, value);
+        redisTemplate.expire(key, expire, TimeUnit.SECONDS);
     }
 
     public Object get(String key) {

@@ -101,7 +101,7 @@ public class HomeController extends Base{
         for(int i=0;i< 100;i++){
             stringList.add(" ====> " + i);
         }
-        cacheRepo.set("list2",stringList,5);
+        cacheRepo.set("list3",stringList,5);
 
         return "index";
     }

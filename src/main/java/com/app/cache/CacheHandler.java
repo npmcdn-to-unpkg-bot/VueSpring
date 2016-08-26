@@ -1,6 +1,5 @@
 package com.app.cache;
 
-import com.app.pojo.Pass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
