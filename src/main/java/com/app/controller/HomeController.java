@@ -1,7 +1,11 @@
 package com.app.controller;
 
+import com.app.cache.CacheHandler;
 import com.app.model.HttpResponse;
+import com.app.pojo.Pass;
 import com.app.pojo.User;
+import com.app.repo.CacheRepo;
+import com.app.repo.PassRepo;
 import com.app.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -29,7 +33,10 @@ public class HomeController extends Base{
     private UserRepo userRepo;
 
     @Autowired
-    private RedisTemplate redisTemplate;
+    private PassRepo passRepo;
+
+    @Autowired
+    private CacheRepo cacheRepo;
 
     @RequestMapping(value = "/index")
     public String index(){
@@ -79,15 +86,22 @@ public class HomeController extends Base{
     @RequestMapping(value = "/redis")
     public String redis(){
 
-        redisTemplate.execute(new RedisCallback<Boolean>() {
-            public Boolean doInRedis(RedisConnection connection)
-                    throws DataAccessException {
-                RedisSerializer<String> serializer = redisTemplate.getStringSerializer();
-                byte[] key  = serializer.serialize("key");
-                byte[] name = serializer.serialize("Hello");
-                return connection.setNX(key, name);
-            }
-        });
+        Pass pass = new Pass();
+        pass.setPass("hello");
+        pass.setGoods("家具");
+        passRepo.set("key",pass);
+        return "index";
+    }
+
+
+    @RequestMapping(value = "/cache")
+    public String hello(){
+
+        List<String> stringList = new ArrayList<String>();
+        for(int i=0;i< 100;i++){
+            stringList.add(" ====> " + i);
+        }
+        cacheRepo.set("list2",stringList,5);
 
         return "index";
     }
