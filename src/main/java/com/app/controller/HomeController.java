@@ -1,6 +1,9 @@
 package com.app.controller;
 
 import com.app.model.HttpResponse;
+import com.app.pojo.User;
+import com.app.repo.UserRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +19,9 @@ import java.util.List;
  */
 @Controller
 public class HomeController extends Base{
+
+    @Autowired
+    private UserRepo userRepo;
 
     @RequestMapping(value = "/index")
     public String index(){
@@ -44,6 +50,16 @@ public class HomeController extends Base{
     public String getHi(){
         getResponse().addCookie(new Cookie("sdfds","dsfdsf"));
         return "redirect:http://www.baidu.com";
+    }
+
+    @RequestMapping(value = "/repo")
+    public String repo(){
+
+        User user = new User();
+        user.setName("hello");
+        user.setId(Long.valueOf(33333));
+        userRepo.save(user);
+        return "index";
     }
 
 
