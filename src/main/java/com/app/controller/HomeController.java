@@ -56,9 +56,15 @@ public class HomeController extends Base{
     public String repo(){
 
         User user = new User();
-        user.setName("hello");
-        user.setId(Long.valueOf(33333));
-        userRepo.save(user);
+        user.setName("hello boy");
+        User user1 = userRepo.save(user);
+
+        System.out.println(""+ user1);
+        if(userRepo.exists("sdfsd")){
+            System.out.println("exist");
+        } else {
+            System.out.println("not exist");
+        }
         return "index";
     }
 

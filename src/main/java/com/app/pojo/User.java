@@ -10,17 +10,18 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @Document(collection = "users")
 public class User {
 
-    private Long Id;
+    @Id
+    private String id;
 
     @Field("nm")
     private String name;
 
-    public Long getId() {
-        return Id;
+    public String getId() {
+        return id;
     }
 
-    public void setId(Long id) {
-        Id = id;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -29,5 +30,13 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                '}';
     }
 }
