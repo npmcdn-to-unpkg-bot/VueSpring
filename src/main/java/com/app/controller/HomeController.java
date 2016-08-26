@@ -4,6 +4,11 @@ import com.app.model.HttpResponse;
 import com.app.pojo.User;
 import com.app.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.core.RedisCallback;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +27,9 @@ public class HomeController extends Base{
 
     @Autowired
     private UserRepo userRepo;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @RequestMapping(value = "/index")
     public String index(){
@@ -65,6 +73,22 @@ public class HomeController extends Base{
         } else {
             System.out.println("not exist");
         }
+        return "index";
+    }
+
+    @RequestMapping(value = "/redis")
+    public String redis(){
+
+        redisTemplate.execute(new RedisCallback<Boolean>() {
+            public Boolean doInRedis(RedisConnection connection)
+                    throws DataAccessException {
+                RedisSerializer<String> serializer = redisTemplate.getStringSerializer();
+                byte[] key  = serializer.serialize("key");
+                byte[] name = serializer.serialize("Hello");
+                return connection.setNX(key, name);
+            }
+        });
+
         return "index";
     }
 
