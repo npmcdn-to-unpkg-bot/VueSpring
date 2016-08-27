@@ -1,5 +1,6 @@
 package com.app.controller;
 
+import com.app.annotation.Authorization;
 import com.app.cache.CacheHandler;
 import com.app.model.HttpResponse;
 import com.app.pojo.Pass;
@@ -7,8 +8,11 @@ import com.app.pojo.User;
 import com.app.repo.CacheRepo;
 import com.app.repo.PassRepo;
 import com.app.repo.UserRepo;
+import com.app.util.MongoIDGenerator;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -29,6 +33,7 @@ import java.util.List;
 @Controller
 public class HomeController extends Base{
 
+    private static Logger logger = Logger.getLogger(HomeController.class);
     @Autowired
     private UserRepo userRepo;
 
@@ -37,6 +42,9 @@ public class HomeController extends Base{
 
     @Autowired
     private CacheRepo cacheRepo;
+
+    @Autowired
+    private MongoDbFactory mongoDbFactory;
 
     @RequestMapping(value = "/index")
     public String index(){
@@ -103,6 +111,24 @@ public class HomeController extends Base{
         }
         cacheRepo.set("list3",stringList,5);
 
+        return "index";
+    }
+
+    @RequestMapping("/generate")
+    @Authorization
+    public String generate(){
+
+        MongoIDGenerator mongoIDGenerator = new MongoIDGenerator(mongoDbFactory.getDb(),1);
+        long id = mongoIDGenerator.generateId("ids");
+
+        System.out.println(" " + id);
+        return "index";
+    }
+
+    @RequestMapping("/mapping")
+    public String mapping(){
+
+        logger.info("haha im test");
         return "index";
     }
 

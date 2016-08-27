@@ -4,6 +4,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
+import org.springframework.util.StringUtils;
 
 /**
  * Created by mosl on 16/8/27.
@@ -33,7 +34,7 @@ public class MongoIDGenerator {
         if (db == null)
             throw new IllegalArgumentException("DB must not be null!");
 
-        if (collectionName == null || collectionName.isEmpty())
+        if (StringUtils.isEmpty(collectionName))
             this.collectionName = DEFAULT_ID_COLLECTIONNAME;
         else
             this.collectionName = collectionName;

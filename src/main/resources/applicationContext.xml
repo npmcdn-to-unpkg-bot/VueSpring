@@ -3,12 +3,13 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mongo="http://www.springframework.org/schema/data/mongo" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/tx
        http://www.springframework.org/schema/tx/spring-tx.xsd
        http://www.springframework.org/schema/context
-       http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo.xsd">
+       http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
     <!--&lt;!&ndash;读取ClassPath中的properties文件&ndash;&gt;-->
     <!--<context:property-placeholder location="classpath:config.properties"/>-->
@@ -50,36 +51,9 @@
         <!--<property name="basePackage" value="com.kaishengit.dao"/>-->
     <!--</bean>-->
 
-    <!-- Configure the Mongo Server -->
-    <mongo:mongo id="mongo" host="localhost" port="27017"/>
-    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
-        <constructor-arg ref="mongo"/>
-        <constructor-arg name="databaseName" value="jcg"/>
-    </bean>
-    <mongo:repositories base-package="com.app.repo" />
+    <context:property-placeholder location="classpath*:*.properties"/>
 
-    <context:component-scan base-package="com.app.cache" />
+    <import resource="classpath:mongodbContext.xml" />
+    <import resource="classpath:redisContext.xml" />
 
-    <!-- 配置文件 -->
-    <context:property-placeholder location="classpath:redis.properties" />
-
-    <!-- redis 连接池配置 -->
-    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
-        <property name="maxIdle" value="${redis.maxIdle}" />
-        <property name="maxTotal" value="${redis.maxActive}" />
-        <property name="maxWaitMillis" value="${redis.maxWait}" />
-        <property name="testOnBorrow" value="${redis.testOnBorrow}" />
-    </bean>
-
-    <!-- 连接 redis 工厂 -->
-    <bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
-          p:host-name="${redis.host}" p:port="${redis.port}"  p:pool-config-ref="poolConfig"/>
-
-    <!-- redis 模板 -->
-    <bean id = "redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
-        <property name="connectionFactory" ref="connectionFactory"/>
-        <property name="keySerializer">
-            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
-        </property>
-    </bean>
 </beans>
