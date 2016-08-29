@@ -161,7 +161,6 @@
       <artifactId>fastjson</artifactId>
       <version>1.2.16</version>
     </dependency>
-
   </dependencies>
   <build>
     <finalName>com.app.vumspringmvc</finalName>

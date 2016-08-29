@@ -17,6 +17,7 @@ import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,15 +37,14 @@ public class HomeController extends Base{
     private static Logger logger = Logger.getLogger(HomeController.class);
     @Autowired
     private UserRepo userRepo;
-
     @Autowired
     private PassRepo passRepo;
-
     @Autowired
     private CacheRepo cacheRepo;
-
     @Autowired
     private MongoDbFactory mongoDbFactory;
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @RequestMapping(value = "/index")
     public String index(){
@@ -132,5 +132,11 @@ public class HomeController extends Base{
         return "index";
     }
 
+    @RequestMapping("/jdbc")
+    public String jdbc(){
+
+        jdbcTemplate.execute("create table person(name varchar(20),password VARCHAR(20))");
+        return "index";
+    }
 
 }
