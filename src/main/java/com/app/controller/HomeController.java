@@ -134,7 +134,6 @@ public class HomeController extends Base{
 
     @RequestMapping("/jdbc")
     public String jdbc(){
-
         jdbcTemplate.execute("create table person(name varchar(20),password VARCHAR(20))");
         return "index";
     }
