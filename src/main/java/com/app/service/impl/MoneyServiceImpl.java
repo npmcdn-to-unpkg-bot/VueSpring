@@ -15,6 +15,6 @@ public class MoneyServiceImpl implements MoneyService{
 
     @Transactional(propagation = Propagation.REQUIRED, noRollbackFor = RuntimeException.class)
     public void transferMoney(Account a, Account b) {
-        
+
     }
 }

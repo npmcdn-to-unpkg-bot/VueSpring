@@ -5,9 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.app.pojo.User;
+
+import java.io.InputStream;
 
 /**
  * Created by mosl on 16/8/25.
@@ -25,7 +28,7 @@ public class UserController {
     }
 
 
-    @RequestMapping("register/{user}")
+    @RequestMapping("/register/{user}")
     public String register(@PathVariable("user")String userName){
 
         if(!StringUtils.isEmpty(userName)){
@@ -36,6 +39,12 @@ public class UserController {
             userService.insertUser(user);
         }
 
+        return "index";
+    }
+
+    @RequestMapping("/test")
+    public String test(Integer userId,@RequestBody InputStream inputStream){
+        System.out.println("userId====>" + userId + inputStream);
         return "index";
     }
 }
