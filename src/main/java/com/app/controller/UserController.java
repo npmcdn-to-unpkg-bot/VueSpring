@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.app.pojo.User;
 
 import java.io.InputStream;
+import java.util.Map;
 
 /**
  * Created by mosl on 16/8/25.
@@ -32,19 +33,23 @@ public class UserController {
     public String register(@PathVariable("user")String userName){
 
         if(!StringUtils.isEmpty(userName)){
-
             User user = new User();
             user.setName(userName);
             user.setPassword("*");
             userService.insertUser(user);
         }
-
         return "index";
     }
 
     @RequestMapping("/test")
     public String test(Integer userId,@RequestBody InputStream inputStream){
         System.out.println("userId====>" + userId + inputStream);
+        return "index";
+    }
+
+    @RequestMapping("index")
+    public String Index(Map<String,Object> map){
+        map.put("username","Hello world!");
         return "index";
     }
 }
