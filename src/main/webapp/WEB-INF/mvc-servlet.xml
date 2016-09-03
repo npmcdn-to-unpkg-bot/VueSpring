@@ -63,6 +63,7 @@
         <bean class="com.app.interceptor.AuthorizationInterceptor"/>
     </mvc:interceptors>
 
+    <!-- 捕获异常 -->
     <bean id="exceptionResolver"
           class="com.app.interceptor.VueSimpleMappingExceptionResolver">
         <property name="exceptionMappings">
