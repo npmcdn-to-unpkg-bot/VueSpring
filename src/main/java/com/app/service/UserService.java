@@ -1,5 +1,6 @@
 package com.app.service;
 
+import com.app.exception.UserNotFoundException;
 import com.app.pojo.User;
 
 /**
@@ -7,5 +8,11 @@ import com.app.pojo.User;
  */
 public interface UserService {
 
-    public void insertUser(User user);
+    void insert(User user);
+
+    User find(int uid) throws UserNotFoundException;
+
+    User find(String uid);
+
+    boolean update(int uid,String field,Object value);
 }

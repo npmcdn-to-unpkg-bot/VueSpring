@@ -42,17 +42,17 @@
     <!--基于注解的事务配置-->
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
-    <!--&lt;!&ndash;MyBatis SqlSessionFactory&ndash;&gt;-->
-    <!--<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">-->
-        <!--<property name="dataSource" ref="dataSource"/>-->
-        <!--<property name="typeAliasesPackage" value="com.kaishengit.pojo"/>-->
-        <!--<property name="mapperLocations" value="classpath*:mapper/*.xml"/>-->
-    <!--</bean>-->
+    <!--MyBatis SqlSessionFactory-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="typeAliasesPackage" value="com.kaishengit.pojo"/>
+        <property name="mapperLocations" value="classpath*:mybatis/*.xml"/>
+    </bean>
 
-    <!--&lt;!&ndash;自动扫描mapper&ndash;&gt;-->
-    <!--<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">-->
-        <!--<property name="basePackage" value="com.kaishengit.dao"/>-->
-    <!--</bean>-->
+    <!--自动扫描mapper-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.kaishengit.dao"/>
+    </bean>
 
     <import resource="classpath:mongodbContext.xml" />
     <import resource="classpath:redisContext.xml" />

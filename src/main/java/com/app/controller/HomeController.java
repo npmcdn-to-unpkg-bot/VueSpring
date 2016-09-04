@@ -51,15 +51,6 @@ public class HomeController extends Base{
         return "index";
     }
 
-    @RequestMapping(value = "/user/{id}")
-    @ResponseBody
-    public List getUsers(@PathVariable(value = "id") String userId){
-        List list = new ArrayList();
-        list.add("hello");
-        list.add(userId);
-        return list;
-    }
-
     @RequestMapping(value = "/hello")
     @ResponseBody
     public HttpResponse getHello(){
@@ -120,7 +111,6 @@ public class HomeController extends Base{
 
         MongoIDGenerator mongoIDGenerator = new MongoIDGenerator(mongoDbFactory.getDb(),1);
         long id = mongoIDGenerator.generateId("ids");
-
         System.out.println(" " + id);
         return "index";
     }
