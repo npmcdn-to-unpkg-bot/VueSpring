@@ -47,6 +47,7 @@
         <property name="dataSource" ref="dataSource"/>
         <property name="typeAliasesPackage" value="com.kaishengit.pojo"/>
         <property name="mapperLocations" value="classpath*:mybatis/*.xml"/>
+        <property name="configLocation" value="classpath:mybatis/mybatis-config.xml" />
     </bean>
 
     <!--自动扫描mapper-->
