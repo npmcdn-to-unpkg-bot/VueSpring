@@ -8,8 +8,12 @@ import com.app.pojo.User;
 import com.app.repo.CacheRepo;
 import com.app.repo.PassRepo;
 import com.app.repo.UserRepo;
+import com.app.service.LogService;
 import com.app.util.MongoIDGenerator;
+import com.mongodb.Block;
+import com.mongodb.client.FindIterable;
 import org.apache.log4j.Logger;
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.mongodb.MongoDbFactory;
@@ -46,6 +50,9 @@ public class HomeController extends Base{
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    private LogService logService;
+
     @RequestMapping(value = "/index")
     public String index(){
         return "index";
@@ -57,6 +64,15 @@ public class HomeController extends Base{
         List list = new ArrayList();
         list.add(30);
         list.add("hello boy!");
+
+//        FindIterable<Document> iterable = db.getCollection("restaurants").find(
+//                new Document("address.zipcode", "10075"));
+//        iterable.forEach(new Block<Document>() {
+//
+//            public void apply(final Document document) {
+//                System.out.println(document);
+//            }
+//        });
         return HttpResponse.SUCCESS(list);
     }
 
@@ -64,6 +80,13 @@ public class HomeController extends Base{
     public String getHi(){
         getResponse().addCookie(new Cookie("sdfds","dsfdsf"));
         return "redirect:http://www.baidu.com";
+    }
+
+    @RequestMapping(value = "/moring")
+    @ResponseBody
+    public String moring(){
+        logService.addLog();
+        return "index";
     }
 
     @RequestMapping(value = "/repo")

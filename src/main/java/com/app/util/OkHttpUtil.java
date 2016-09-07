@@ -37,4 +37,10 @@ public class OkHttpUtil {
         Response response = client.newCall(request).execute();
         return response.body().string();
     }
+
+
+    public static void main(int a,int b){
+
+        
+    }
 }
